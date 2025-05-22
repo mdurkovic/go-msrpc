@@ -10,6 +10,7 @@ import (
 	"os"
 
 	"github.com/oiweiwei/go-msrpc/dcerpc"
+	"github.com/rs/zerolog"
 
 	"github.com/oiweiwei/go-msrpc/ssp/gssapi"
 
@@ -32,6 +33,8 @@ func init() {
 }
 
 func main() {
+
+	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
 
 	if err := config_flag.ParseAndValidate(cfg, flag.CommandLine); err != nil {
 		fmt.Fprintln(os.Stderr, err)

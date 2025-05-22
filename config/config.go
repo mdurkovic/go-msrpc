@@ -473,7 +473,7 @@ func (cfg *Config) EPMOptions(ctx context.Context) []dcerpc.Option {
 
 func (cfg *Config) Log() {
 
-	log := zerolog.New(os.Stderr)
+	log := zerolog.New(zerolog.ConsoleWriter{Out: os.Stderr}).With().Timestamp().Logger()
 
 	if cfg.Debug {
 		b, err := json.Marshal(cfg)
@@ -490,7 +490,7 @@ func (cfg *Config) getDialOptions() []dcerpc.Option {
 	options := []dcerpc.Option{}
 
 	if cfg.Debug {
-		options = append(options, dcerpc.WithLogger(zerolog.New(os.Stderr)))
+		options = append(options, dcerpc.WithLogger(zerolog.New(zerolog.ConsoleWriter{Out: os.Stderr}).With().Timestamp().Logger()))
 	}
 
 	if cfg.Timeout != 0 {
@@ -791,7 +791,7 @@ func (cfg *Config) Validate() error {
 	}
 
 	if cfg.Debug {
-		cfg.Logger = zerolog.New(os.Stderr).With().Str("source", "config").Logger()
+		cfg.Logger = zerolog.New(zerolog.ConsoleWriter{Out: os.Stderr}).With().Timestamp().Str("source", "config").Logger()
 	}
 
 	for _, typ := range cfg.Auth.Types {
